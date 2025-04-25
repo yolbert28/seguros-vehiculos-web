@@ -6,10 +6,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-import Menu from "./icons/Menu";
+import LeftArrow from "./icons/LeftArrow";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { useState } from "react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -25,6 +26,12 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const handlerMenu = () => {
+    setIsVisible(!isVisible);
+  };
+
   return (
     <html lang="en">
       <head>
@@ -34,7 +41,32 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="bg-[#B2DFFF66] flex flex-col items-center">
-        <div className="h-20 w-full relative bg-[#003366] flex flex-col items-center">
+        <nav
+          className="sticky top-0 w-screen h-screen bg-[#003366] z-40 text-[#FAFDFF]"
+          style={{ display: isVisible ? "block" : "none" }}
+        >
+          <ul>
+            <li className="py-4 hover:bg-[#0057B4]" onClick={handlerMenu}>
+              <LeftArrow />
+            </li>
+            <li className="py-4 hover:bg-[#0057B4]">
+              <a href="/" className="py-4 pl-[4vw] pr-[80vw] w-full">
+                Inicio
+              </a>
+            </li>
+            <li className="py-4 hover:bg-[#0057B4]">
+              <a href="/profile" className="py-4 pl-[4vw] pr-[80vw] w-full">
+                Mi perfil
+              </a>
+            </li>
+            <li className="py-4 hover:bg-[#0057B4]">
+              <a href="/" className="py-4 pl-[4vw] pr-[80vw] w-full ">
+                Login
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div className="h-20 w-full relative bg-[#003366] flex flex-col items-center text-[#FAFDFF] font-bold">
           <div className="h-20 w-full max-w-[1000px] relative bg-[#003366] flex flex-row items-center">
             <a href="/" className="mr-auto">
               <img
@@ -48,11 +80,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 className="h-20 relative left-4 sm:inline hidden"
               />
             </a>
-            <Menu />
-            {/* <nav>
-            <a href="">Login</a>
-            <a href="">Register</a>
-          </nav> */}
+            <a href="/" className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
+              Inicio
+            </a>
+            <a href="/profile" className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
+              Mi perfil
+            </a>
+            <a href="" className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
+              Login
+            </a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+              width={45}
+              height={45}
+              style={{ marginRight: 20 }}
+              onClick={handlerMenu}
+              className="sm:hidden cursor-pointer"
+            >
+              <path
+                fill="#FAFDFF"
+                d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"
+              />
+            </svg>
           </div>
         </div>
 

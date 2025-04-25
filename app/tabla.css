@@ -1,0 +1,37 @@
+table{
+	background-color: #FAFDFF;
+	text-align: left;
+	border-collapse: collapse;
+  border: 2px solid #002651;
+	width: 100%;
+}
+
+th{
+	padding: 10px;
+  color: #FAFDFF;
+	position: relative;
+}
+
+td{
+	padding: 10px;
+}
+
+td:last-child{
+	text-align: center;
+	padding-top: 15px;
+}
+
+thead{
+	position: sticky;
+	background-color: #003366;
+	border-bottom: solid 5px #002651;
+}
+
+tr:nth-child(even){
+	background-color: #B2DFFF;
+}
+
+tr:hover td{
+	background-color: #0057B4;
+	color: #FAFDFF;
+}
