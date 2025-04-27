@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "../tabla.css";
 import styles from "../policy.module.css";
+import { redirect, useNavigate } from "react-router";
+import { useParams } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,6 +12,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Policy() {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  
   const [policy, setPolicy] = useState({
     id: 3,
     cliente_doc: "30601662",
@@ -99,10 +104,10 @@ export default function Policy() {
       {/* <button className="bg-[#003366] py-6 px-16 mt-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]">
         Reportar siniestro
       </button> */}
-      <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">Informacion de vehiculos</h2>
+      <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">Informacion de vehículos</h2>
       <div className={styles.vehiclesList}>
         {policy.vehiculos.map((vehiculo) => (
-          <div key={vehiculo.matricula} className={`${styles.vehicleItem}`}>
+          <div key={vehiculo.matricula} className={`${styles.vehicleItem}`} onClick={() => {navigate(`/vehicle/${vehiculo.matricula}`)}}>
             <div className={styles.vehicleInfo}>
               <span className={styles.vehiclePlate}>{vehiculo.matricula}</span>
               <span>Chevrolet - Aveo</span>

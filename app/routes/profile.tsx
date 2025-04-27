@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../tabla.css";
 import styles from "../policy.module.css";
+import { Link } from "react-router"
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -124,9 +125,9 @@ export default function Profile() {
           <span className="font-bold">Dirección:</span> {user.direccion}
         </div>
       </div>
-      <button className="bg-[#003366] py-6 px-16 mt-12 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]">
+      <Link className="bg-[#003366] py-6 px-16 mt-12 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]" to="/report/306016362" >
         Reportar siniestro
-      </button>
+      </Link>
       <h2 className="text-3xl font-bold py-16 text-center w-[90%] border-y-[#003366] border-t-3 "  onClick={() => setShowPolicy(!showPolicy)}>
         Informacion de polizas
       </h2>

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import "../tabla.css";
+import { useParams } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -12,6 +13,8 @@ export default function Report() {
   const description = useRef<HTMLTextAreaElement>(null);
   const address = useRef<HTMLTextAreaElement>(null);
 
+  const { document } = useParams()
+
   const [user, setUser] = useState({
     documento: "30601662",
     nombre: "Yolbert Torrealba",
@@ -20,12 +23,29 @@ export default function Report() {
     direccion: "Calle 1, casa 2",
   });
 
-  const handlerClick = () => {
+  const handlerClick = async () => {
     const descriptionValue = description.current?.value;
     const addressValue = address.current?.value;
+    const date = new Date().toISOString().slice(0, 10)
+    console.log("Response status:");
 
-    console.log("Descripción:", descriptionValue);
-    console.log("Dirección:", addressValue);
+    const response = await fetch("https://seguros-vehiculos-backend-production.up.railway.app/accidentReport", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cliente_doc: user.documento,
+        descripcion: descriptionValue,
+        direccion: addressValue,
+        fecha: date,
+      })
+      // ...
+    });
+
+    console.log(response.status);
+
+    console.log(await response.json());
   }
 
   return (
@@ -44,9 +64,9 @@ export default function Report() {
           <textarea id="address" className=" bg-[#FAFDFF] border-amber-500 border-1 rounded-md w-full h-24 resize-none" ref={address}/>
         </div>
       </div>
-      <button className="bg-[#003366] py-6 px-16 mt-12 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]" onClick={handlerClick} >
+      <div className="bg-[#003366] py-6 px-16 mt-12 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]" onClick={handlerClick} >
         Reportar siniestro
-      </button>
+      </div>
     </main>
   );
 }
