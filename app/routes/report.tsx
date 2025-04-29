@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import "../tabla.css";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -12,6 +12,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Report() {
   const description = useRef<HTMLTextAreaElement>(null);
   const address = useRef<HTMLTextAreaElement>(null);
+  const navigate = useNavigate();
 
   const { document } = useParams()
 
@@ -46,6 +47,7 @@ export default function Report() {
     console.log(response.status);
 
     console.log(await response.json());
+    navigate("/profile" );
   }
 
   return (
