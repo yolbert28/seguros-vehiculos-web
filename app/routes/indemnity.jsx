@@ -80,11 +80,11 @@ export default function Indemnity() {
                   <span className={styles.vehiclePlate}>
                     {String(reparacion.id).padStart(6, "0")}
                   </span>
-                  <span>Taller rif: {reparacion.taller_rif}</span>
+                  <span className="w-[95%] wrap-break-word">Taller rif: {reparacion.taller_rif}</span>
                   <span className=" w-[95%] wrap-break-word">
                     Descripcion: {reparacion.descripcion}
                   </span>
-                  <span>Monto: {reparacion.monto}</span>
+                  <span className="w-[95%] wrap-break-word">Monto: {reparacion.monto}</span>
                 </div>
               </div>
             ))}
@@ -97,15 +97,12 @@ export default function Indemnity() {
               <div
                 key={inspeccion.id}
                 className={`${styles.vehicleItem}`}
-                onClick={() => {
-                  navigate(`/indemnityInspection/${inspeccion.id}`);
-                }}
               >
                 <div className={styles.vehicleInfo}>
                   <span className={styles.vehiclePlate}>
                     {String(inspeccion.id).padStart(6, "0")}
                   </span>
-                  <span>Inspector: {inspeccion.inspector_doc}</span>
+                  <span  className="w-[95%] wrap-break-word">Inspector: {inspeccion.inspector_doc}</span>
                   <span className=" w-[95%] wrap-break-word">
                     Descripcion: {inspeccion.descripcion}
                   </span>

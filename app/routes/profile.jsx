@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../tabla.css";
 import styles from "../policy.module.css";
 import { Link, useNavigate } from "react-router";
+import { useInfoStore } from "../store.js";
 
 export function meta({}) {
   return [
@@ -17,13 +18,7 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({
-    documento: "30601662",
-    nombre: "Yolbert Torrealba",
-    correo: "yolberttorrealba@gmail.com",
-    telefono: "0414-1234567",
-    direccion: "Calle 1, casa 2",
-  });
+  const user = useInfoStore(state => state.user);
 
   const [policy, setPolicy] = useState([]);
   const [vehicles, setVehicles] = useState([]);
@@ -67,6 +62,7 @@ export default function Profile() {
         const result = await response.json();
         const result1 = await response1.json();
         const result2 = await response2.json();
+
         setPolicy(result);
         setVehicles(result1);
         setAccidentReport(result2);
@@ -78,7 +74,7 @@ export default function Profile() {
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   if (!policy || !vehicles || !accidentReport) setLoading(false);
 
@@ -120,12 +116,12 @@ export default function Profile() {
             {policy.map((policy) => (
               <div key={policy.id} className={`${styles.vehicleItem}`}  onClick={() => navigate("/policy/" + policy.id)}>
                 <div className={styles.vehicleInfo}>
-                  <span className={styles.vehiclePlate}>{policy.id}</span>
-                  <span>Asesor: {policy.cliente_doc}</span>
-                  <span>
+                  <span className={styles.vehiclePlate}>{String(policy.id).padStart(6,"0")}</span>
+                  <span className="w-[95%] wrap-break-word">Asesor: {policy.asesor}</span>
+                  <span className="w-[95%] wrap-break-word">
                     {policy.fecha_creacion} - {policy.fecha_fin}
                   </span>
-                  <span>tipo de pago: {policy.tipo_pago}</span>
+                  <span className="w-[95%] wrap-break-word">tipo de pago: {policy.nombre_tipo_pago}</span>
                 </div>
               </div>
             ))}
@@ -146,10 +142,10 @@ export default function Profile() {
                   <span className={styles.vehiclePlate}>
                     {vehicle.matricula}
                   </span>
-                  <span>{vehicle.marca} - {vehicle.modelo}</span>
-                  <span>Año: {vehicle.anno}</span>
-                  <span>Capacidad de carga: {vehicle.capacidad_carga}</span>
-                  <span>Valoración: ${vehicle.valoracion}</span>
+                  <span className="w-[95%] wrap-break-word">{vehicle.marca} - {vehicle.modelo}</span>
+                  <span className="w-[95%] wrap-break-word">Año: {vehicle.anno}</span>
+                  <span className="w-[95%] wrap-break-word">Capacidad de carga: {vehicle.capacidad_carga}</span>
+                  <span className="w-[95%] wrap-break-word">Valoración: ${vehicle.valoracion}</span>
                 </div>
               </div>
             ))}
@@ -167,13 +163,13 @@ export default function Profile() {
             {accidentReport.map((report) => (
               <div key={report.id} className={`${styles.vehicleItem}`}  onClick={() => navigate("/accidentReport/" + report.id)}>
                 <div className={styles.vehicleInfo}>
-                  <span className={styles.vehiclePlate}>
+                  <span className={styles.vehiclePlate} >
                     {String(report.id).padStart(6, "0")}
                   </span>
-                  <span>Descripcion: {report.descripcion}</span>
-                  <span>Direccion: {report.direccion}</span>
-                  <span>Fecha: {report.fecha}</span>
-                  <span>
+                  <span className="w-[95%] wrap-break-word">Descripcion: {report.descripcion}</span>
+                  <span className="w-[95%] wrap-break-word">Direccion: {report.direccion}</span>
+                  <span className="w-[95%] wrap-break-word">Fecha: {report.fecha}</span>
+                  <span className="w-[95%] wrap-break-word">
                     Estado: {report.atendido ? "Atendido" : "Pendiente"}
                   </span>
                 </div>

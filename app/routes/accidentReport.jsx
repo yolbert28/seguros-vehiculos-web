@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../tabla.css";
-import styles from "../policy.module.css";
 import { useNavigate, useParams } from "react-router";
+import { useInfoStore } from "../store";
 
 export function meta({}) {
   return [
@@ -10,8 +10,8 @@ export function meta({}) {
   ];
 }
 
-export default function AccidentInspection() {
-  const [accidentInspection, setAccidentInspection] = useState({});
+export default function AccidentReport() {
+  const [report, setReport] = useState({});
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function AccidentInspection() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://seguros-vehiculos-backend-production.up.railway.app/accidentInspection/" +
+          "https://seguros-vehiculos-backend-production.up.railway.app/accidentReport/" +
             id,
           {
             headers: {
@@ -35,7 +35,7 @@ export default function AccidentInspection() {
         }
         const result = await response.json();
         console.log(result);
-        setAccidentInspection(result);
+        setReport(result);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -48,49 +48,32 @@ export default function AccidentInspection() {
 
   return (
     <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">
-      {(user.documento == accidentInspection.cliente_doc) && accidentInspection ? (<>
+      {user.documento == report.cliente_doc ? (<>
       <h1 className="text-5xl font-bold pt-16 text-center">
-        Información de inspección de siniestro
+        Información del reporte del siniestro
       </h1>
       {!loading ? (
         <>
           <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
             <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Identificador: </span>{" "}
-              {accidentInspection.id}
+              {String(report.id).padStart(6, "0")}
             </div>
             <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Documento del inspector: </span>{" "}
-              {accidentInspection.inspector_doc}
+              <span className="font-bold">Descripción: </span>{" "}
+              {report.descripcion}
             </div>
             <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Inspector: </span>
-              {accidentInspection.inspector.nombre}
+              <span className="font-bold">Dirección: </span> {report.direccion}
             </div>
             <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Descripción: </span>
-              {accidentInspection.descripcion}
+              <span className="font-bold">fecha: </span>
+              {report.fecha}
             </div>
-          </div>
-          <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">
-            Información de repuestos afectados en el siniestro
-          </h2>
-          <div className={styles.vehiclesList}>
-            {accidentInspection.repuestos.map((repuesto) => (
-              <div key={repuesto.id} className={`${styles.vehicleItem}`}>
-                <div className={styles.vehicleInfo}>
-                  <span className={styles.vehiclePlate}>
-                    {String(repuesto.id).padStart(6, "0")}
-                  </span>
-                  <span className="w-[95%] wrap-break-word">
-                    Nombre: {repuesto.nombre}
-                  </span>
-                  <span className="w-[95%] wrap-break-word">
-                    Cantidad: {repuesto.cantidad}
-                  </span>
-                </div>
-              </div>
-            ))}
+            <div className="w-[95%] wrap-break-word">
+              <span className="font-bold">Estado: </span>
+              {report.atendido ? "Pendiente" : "Finalizado"}
+            </div>
           </div>
           <button
             className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
@@ -102,9 +85,10 @@ export default function AccidentInspection() {
           </button>
         </>
       ) : (
-        <div> Cargando</div>
-      )}</>):(<h1 className="text-5xl font-bold pt-16 text-center">
-        No existe una inspeccion de siniestro con el id: {id}
+        <div> cargando</div>
+      )}
+      </>):(<h1 className="text-5xl font-bold pt-16 text-center">
+        No existe un reporte de siniestro con id: {id}
       </h1>)}
     </main>
   );

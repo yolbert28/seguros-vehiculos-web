@@ -3,7 +3,7 @@ import "../tabla.css";
 import styles from "../policy.module.css";
 import { Link, useNavigate, useParams } from "react-router";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({}) {
   return [
     { title: "SmartRide" },
     { name: "description", content: "Welcome to React Router!" },

@@ -52,29 +52,29 @@ export default function Vehicle() {
       {!loading ? (
         <>
           <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Matricula: </span> {vehicle.matricula}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Marca: </span> {vehicle.modelo.marca}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Modelo: </span>
               {vehicle.modelo.nombre}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Año: </span>
               {vehicle.anno}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Valoración:</span>{" "}
               {vehicle.valoracion}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Nivel de riesgo: </span>
               {vehicle.riesgo}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Ultima actualizacion: </span>
               {vehicle.ultima_actualizacion}
             </div>
@@ -83,30 +83,30 @@ export default function Vehicle() {
             Informacion de póliza
           </h2>
           <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Identificador:</span>{" "}
               {vehicle.poliza.id}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Documento del asesor:</span>{" "}
               {vehicle.poliza.asesor_doc}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Asesor:</span> {vehicle.poliza.asesor}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Fecha de creacion:</span>{" "}
               {vehicle.poliza.fecha_creacion}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Fecha de finalizacion:</span>{" "}
               {vehicle.poliza.fecha_fin}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Monto total:</span>{" "}
               {vehicle.poliza.tipo_pago}
             </div>
-            <div>
+            <div className="w-[95%] wrap-break-word">
               <span className="font-bold">Tipo de pago:</span>{" "}
               {vehicle.poliza.nombre_tipo_pago}
             </div>
@@ -129,11 +129,11 @@ export default function Vehicle() {
                   <span className={styles.vehiclePlate}>
                     {String(maintenance.id).padStart(6, "0")}
                   </span>
-                  <span>Taller rif: {maintenance.taller_rif}</span>
+                  <span className="w-[95%] wrap-break-word">Taller rif: {maintenance.taller_rif}</span>
                   <span className=" w-[95%] wrap-break-word">
                     descripcion: {maintenance.descripcion}
                   </span>
-                  <span>fecha: {maintenance.fecha}</span>
+                  <span className="w-[95%] wrap-break-word">fecha: {maintenance.fecha}</span>
                 </div>
               </div>
             ))}
@@ -154,11 +154,11 @@ export default function Vehicle() {
                   <span className={styles.vehiclePlate}>
                     {String(sinister.id).padStart(6, "0")}
                   </span>
-                  <span>Descripción: {sinister.descripcion}</span>
+                  <span className="w-[95%] wrap-break-word">Descripción: {sinister.descripcion}</span>
                   <span className=" w-[95%] wrap-break-word">
                     Lugar: {sinister.lugar}
                   </span>
-                  <span>fecha: {sinister.fecha}</span>
+                  <span className="w-[95%] wrap-break-word">fecha: {sinister.fecha}</span>
                 </div>
               </div>
             ))}

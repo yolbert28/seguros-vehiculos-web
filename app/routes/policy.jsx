@@ -4,7 +4,7 @@ import styles from "../policy.module.css";
 import { redirect, useNavigate } from "react-router";
 import { useParams } from "react-router";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({}) {
   return [
     { title: "SmartRide" },
     { name: "description", content: "Welcome to React Router!" },
@@ -54,24 +54,24 @@ export default function Policy() {
       </h1>
       {!loading ? ( <>
       <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
-        <div>
+        <div  className="w-[95%] wrap-break-word">
           <span className="font-bold">Identificador:</span> {policy.id}
-        </div>
-        <div>
+        </div >
+        <div  className="w-[95%] wrap-break-word">
           <span className="font-bold">Asesor:</span> {policy.asesor.nombre}
         </div>
-        <div>
+        <div className="w-[95%] wrap-break-word">
           <span className="font-bold">Fecha de creacion:</span>{" "}
           {policy.fecha_creacion}
         </div>
-        <div>
+        <div className="w-[95%] wrap-break-word">
           <span className="font-bold">Fecha de finalizacion:</span>{" "}
           {policy.fecha_fin}
         </div>
-        <div>
+        <div className="w-[95%] wrap-break-word">
           <span className="font-bold">Monto total:</span> {policy.tipo_pago}
         </div>
-        <div>
+        <div className="w-[95%] wrap-break-word">
           <span className="font-bold">Tipo de pago:</span> {policy.tipo_pago}
         </div>
       </div>
@@ -92,10 +92,10 @@ export default function Policy() {
           >
             <div className={styles.vehicleInfo}>
               <span className={styles.vehiclePlate}>{vehiculo.matricula}</span>
-              <span>{vehiculo.marca} - {vehiculo.modelo}</span>
-              <span>Año: {vehiculo.anno}</span>
-              <span>Capacidad de carga: {vehiculo.capacidad_carga}</span>
-              <span>Valoracion: ${vehiculo.valoracion}</span>
+              <span className="w-[95%] wrap-break-word">{vehiculo.marca} - {vehiculo.modelo}</span>
+              <span className="w-[95%] wrap-break-word">Año: {vehiculo.anno}</span>
+              <span className="w-[95%] wrap-break-word">Capacidad de carga: {vehiculo.capacidad_carga}</span>
+              <span className="w-[95%] wrap-break-word">Valoracion: ${vehiculo.valoracion}</span>
             </div>
           </div>
         ))}
@@ -110,8 +110,8 @@ export default function Policy() {
               <span className={styles.vehiclePlate}>
                 {String(prima.id).padStart(6, "0")}
               </span>
-              <span>Monto: {prima.monto}</span>
-              <span>Fecha: {prima.fecha}</span>
+              <span className="w-[95%] wrap-break-word">Monto: {prima.monto}</span>
+              <span className="w-[95%] wrap-break-word">Fecha: {prima.fecha}</span>
             </div>
           </div>
         ))}

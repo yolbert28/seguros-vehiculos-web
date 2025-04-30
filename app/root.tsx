@@ -40,7 +40,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-[#B2DFFF66] flex flex-col items-center">
+      <body className="bg-[#B2DFFF66] flex flex-col items-center h-screen">
         <nav
           className="sticky top-0 w-screen h-screen bg-[#003366] z-40 text-[#FAFDFF]"
           style={{ display: isVisible ? "block" : "none" }}
