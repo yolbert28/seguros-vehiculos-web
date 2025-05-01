@@ -74,9 +74,9 @@ export function Layout({ children }) {
               </a>
             </li>
             <li className="py-4 hover:bg-[#0057B4]">
-              <a href="/" className="py-4 pl-[4vw] pr-[80vw] w-full ">
+              <button onClick={handlerClick} href="/" className="py-4 pl-[4vw] pr-[80vw] w-full ">
                 Login
-              </a>
+              </button>
             </li>
           </ul>
         </nav>
