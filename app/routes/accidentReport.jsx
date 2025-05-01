@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../tabla.css";
 import { useNavigate, useParams } from "react-router";
 import { useInfoStore } from "../store";
+import ProtectedRoute from "./ProtectedRoute";
 
 export function meta({}) {
   return [
@@ -47,49 +48,56 @@ export default function AccidentReport() {
   }, [user]);
 
   return (
-    <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">
-      {user.documento == report.cliente_doc ? (<>
-      <h1 className="text-5xl font-bold pt-16 text-center">
-        Información del reporte del siniestro
-      </h1>
-      {!loading ? (
-        <>
-          <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Identificador: </span>{" "}
-              {String(report.id).padStart(6, "0")}
-            </div>
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Descripción: </span>{" "}
-              {report.descripcion}
-            </div>
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Dirección: </span> {report.direccion}
-            </div>
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">fecha: </span>
-              {report.fecha}
-            </div>
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Estado: </span>
-              {report.atendido ? "Pendiente" : "Finalizado"}
-            </div>
-          </div>
-          <button
-            className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Volver
-          </button>
-        </>
-      ) : (
-        <div> cargando</div>
-      )}
-      </>):(<h1 className="text-5xl font-bold pt-16 text-center">
-        No existe un reporte de siniestro con id: {id}
-      </h1>)}
-    </main>
+    <ProtectedRoute>
+      <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">
+        {!loading ? (
+          <>
+            {user.documento == report.cliente_doc ? (
+              <>
+                <h1 className="text-5xl font-bold pt-16 text-center">
+                  Información del reporte del siniestro
+                </h1>
+                <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">Identificador: </span>{" "}
+                    {String(report.id).padStart(6, "0")}
+                  </div>
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">Descripción: </span>{" "}
+                    {report.descripcion}
+                  </div>
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">Dirección: </span>{" "}
+                    {report.direccion}
+                  </div>
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">fecha: </span>
+                    {report.fecha}
+                  </div>
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">Estado: </span>
+                    {report.atendido ? "Pendiente" : "Finalizado"}
+                  </div>
+                </div>
+                <button
+                  className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Volver
+                </button>
+              </>
+            ) : (
+              <h1 className="text-5xl font-bold pt-16 text-center">
+                No existe la página
+              </h1>
+            )}
+          </>
+        ) : (
+          <div> cargando</div>
+        )}
+      </main>
+    </ProtectedRoute>
   );
 }

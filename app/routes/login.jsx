@@ -16,8 +16,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [status, setStatus] = useState(200);
 
-  const setUser = useInfoStore((status) => status.setUser);
-  const setToken = useInfoStore((status) => status.setToken);
+  const login = useInfoStore((status) => status.login);
 
   const handlerClick = async () => {
     const documentValue = document.current?.value;
@@ -50,8 +49,7 @@ export default function Login() {
       const result = await response.json();
       console.log(result);
 
-      setUser(result.user);
-      setToken(result.token);
+      login(result.token,result.user);
 
       navigate("/profile");
     }

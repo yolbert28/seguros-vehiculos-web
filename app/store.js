@@ -2,10 +2,35 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export const useInfoStore = create(persist((set) => ({
-  token: "",
+  token: null,
+  loginTime: null,  // Guardamos el momento del login
+  expirationTimer: null,  // Referencia al temporizador
   user: {},
   setUser: (newUser) => set(() => ({ user: newUser })),
-  setToken: (newToken) => set(() => ({ token: newToken }))
+  // Acción para iniciar sesión
+  login: (token, user) => {
+    // Limpiar cualquier temporizador previo
+    const { expirationTimer } = useInfoStore.getState();
+    if (expirationTimer) clearTimeout(expirationTimer);
+
+    // Establecer el nuevo token y hora de login
+    const loginTime = new Date().getTime();
+    const timer = setTimeout(() => {
+      useInfoStore.getState().logout();
+      console.log('Sesión expirada automáticamente después de 1 hora');
+    }, 3600000); // 1 hora en milisegundos
+
+    set({ user, token, loginTime, expirationTimer: timer });
+  },
+
+  // Acción para cerrar sesión
+  logout: () => {
+    const { expirationTimer } = useInfoStore.getState();
+    if (expirationTimer) clearTimeout(expirationTimer);
+    
+    set(() => ({ user: {}, token: null, loginTime: null, expirationTimer: null }));
+    
+  }
 })))
 
 // {

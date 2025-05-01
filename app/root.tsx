@@ -5,12 +5,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigate,
 } from "react-router";
 import LeftArrow from "./icons/LeftArrow";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 import { useState } from "react";
+import { useInfoStore } from "./routes/store";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -26,11 +28,24 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const token = useInfoStore((state) => state.token);
+  const logout = useInfoStore((state) => state.logout);
+  const navigate = useNavigate();
+
   const [isVisible, setIsVisible] = useState(false);
 
   const handlerMenu = () => {
     setIsVisible(!isVisible);
   };
+
+  const handlerClick = () => {
+    if(!token)
+      navigate("/Login");
+    else {
+       if (confirm("Seguro que desea cerrar la sesión"))
+          logout();
+    }
+  }
 
   return (
     <html lang="en">
@@ -67,7 +82,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </ul>
         </nav>
         <div className="h-20 w-full relative bg-[#003366] flex flex-col items-center text-[#FAFDFF] font-bold">
-          <div className="h-20 w-full max-w-[1000px] relative bg-[#003366] flex flex-row items-center">
+          <div className="h-20 w-full max-w-[1000px] relative bg-[#003366] flex flex-row items-center overflow-hidden">
             <a href="/" className="mr-auto">
               <img
                 src="/white.png"
@@ -86,9 +101,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <a href="/profile" className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
               Mi perfil
             </a>
-            <a href="" className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
-              Login
-            </a>
+            <button onClick={handlerClick} className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
+              {token ? "Logout" : "Login"}
+            </button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"

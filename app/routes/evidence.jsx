@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../tabla.css";
 import { useNavigate, useParams } from "react-router";
+import ProtectedRoute from "./ProtectedRoute";
 
 export function meta({}) {
   return [
@@ -14,6 +15,8 @@ export default function Evidence() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const user = useInfoStore((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,38 +47,50 @@ export default function Evidence() {
   }, []);
 
   return (
-    <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">
-      <h1 className="text-5xl font-bold pt-16 text-center">
-        Información de evidencia
-      </h1>
-      {!loading ? (
-        <>
-          <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Identificador: </span>
-              {evidence.id}
-            </div>
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Tipo de evidencia: </span>
-              {evidence.nombre_tipo_evidencia}
-            </div>
-            <div className="w-[95%] wrap-break-word">
-              <span className="font-bold">Ruta del archivo: </span>
-              <a href={evidence.ruta_archivo} className="underline">{evidence.ruta_archivo}</a>
-            </div>
-          </div>
-          <button
-            className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Volver
-          </button>
-        </>
-      ) : (
-        <div> Cargando</div>
-      )}
-    </main>
+    <ProtectedRoute>
+      <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">
+        {!loading ? (
+          <>
+            {user.documento == evidence.cliente_doc ? (
+              <>
+                <h1 className="text-5xl font-bold pt-16 text-center">
+                  Información de evidencia
+                </h1>
+                <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">Identificador: </span>
+                    {String(evidence.id).padStart(6,"0")}
+                  </div>
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">Tipo de evidencia: </span>
+                    {evidence.nombre_tipo_evidencia}
+                  </div>
+                  <div className="w-[95%] wrap-break-word">
+                    <span className="font-bold">Ruta del archivo: </span>
+                    <a href={evidence.ruta_archivo} className="underline">
+                      {evidence.ruta_archivo}
+                    </a>
+                  </div>
+                </div>
+                <button
+                  className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Volver
+                </button>
+              </>
+            ) : (
+              <h1 className="text-5xl font-bold pt-16 text-center">
+                No existe la página
+              </h1>
+            )}
+          </>
+        ) : (
+          <div> Cargando</div>
+        )}
+      </main>
+    </ProtectedRoute>
   );
 }

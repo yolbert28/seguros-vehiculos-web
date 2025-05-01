@@ -6,7 +6,7 @@ export default [
   route("policy/:id","./routes/policy.jsx"),
   route("vehicle/:matricula","./routes/vehicle.jsx"),
   route("sinister/:id","./routes/sinister.jsx"),
-  route("report/:document","./routes/report.tsx"),
+  route("report","./routes/report.jsx"),
   route("maintenance/:id","./routes/maintenance.jsx"),
   route("accidentInspection/:id","./routes/accidentInspection.jsx"),
   route("evidence/:id","./routes/evidence.jsx"),
