@@ -41,7 +41,7 @@ export function Layout({ children }) {
     if(!token)
       navigate("/Login");
     else {
-       if (confirm("Seguro que desea cerrar la sesión"))
+      if (confirm("Seguro que desea cerrar la sesión"))
           logout();
     }
   }
@@ -80,7 +80,7 @@ export function Layout({ children }) {
             </li>
           </ul>
         </nav>
-        <div className="h-20 w-full relative bg-[#003366] flex flex-col items-center text-[#FAFDFF] font-bold">
+        <div className="h-20 w-full relative bg-[#003366] flex flex-col items-center text-[#FAFDFF] font-bold" style={{ display: isVisible ? "none" : "flex" }}>
           <div className="h-20 w-full max-w-[1000px] relative bg-[#003366] flex flex-row items-center overflow-hidden">
             <a href="/" className="mr-auto">
               <img

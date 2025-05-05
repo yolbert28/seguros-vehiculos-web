@@ -8,6 +8,7 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
+    console.log("Token", token);
     if (!token) {
       navigate('/login');
     } else {

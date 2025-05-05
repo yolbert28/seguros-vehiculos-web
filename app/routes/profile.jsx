@@ -4,8 +4,9 @@ import styles from "../policy.module.css";
 import { Link, useNavigate } from "react-router";
 import { useInfoStore } from "../store.js";
 import ProtectedRoute from "./ProtectedRoute.jsx";
+import { shallow } from "zustand/shallow";
 
-export function meta({}) {
+export function meta({ }) {
   return [
     { title: "SmartRide" },
     { name: "description", content: "Welcome to React Router!" },
@@ -19,7 +20,7 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
-  const user = useInfoStore((state) => state.user);
+  const user = useInfoStore((state) => state.user, shallow);
 
   const [policy, setPolicy] = useState([]);
   const [vehicles, setVehicles] = useState([]);
@@ -27,46 +28,85 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(true);
 
+  // console.log("Polizas", policy);
+
   useEffect(() => {
+    if (!user?.documento) return;
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://seguros-vehiculos-backend-production.up.railway.app/policy/client/" +
+
+        const [policyRes, vehiclesRes, reportRes] = await Promise.all([
+          fetch(
+            "https://seguros-vehiculos-backend-production.up.railway.app/policy/client/" +
             user.documento,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const response1 = await fetch(
-          "https://seguros-vehiculos-backend-production.up.railway.app/vehicle/client/" +
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          ),
+          fetch(
+            "https://seguros-vehiculos-backend-production.up.railway.app/vehicle/client/" +
             user.documento,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const response2 = await fetch(
-          "https://seguros-vehiculos-backend-production.up.railway.app/accidentReport/client/" +
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          ),
+          fetch(
+            "https://seguros-vehiculos-backend-production.up.railway.app/accidentReport/client/" +
             user.documento,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+        ]);
 
-        const result = await response.json();
-        const result1 = await response1.json();
-        const result2 = await response2.json();
+        const [policyData, vehiclesData, reportData] = await Promise.all([
+          policyRes.json(),
+          vehiclesRes.json(),
+          reportRes.json()
+        ]);
+        // const response = await fetch(
+        //   "https://seguros-vehiculos-backend-production.up.railway.app/policy/client/" +
+        //   user.documento,
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
 
-        setPolicy(result);
-        setVehicles(result1);
-        setAccidentReport(result2);
+        // const response1 = await fetch(
+        //   "https://seguros-vehiculos-backend-production.up.railway.app/vehicle/client/" +
+        //   user.documento,
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
+
+        // const response2 = await fetch(
+        //   "https://seguros-vehiculos-backend-production.up.railway.app/accidentReport/client/" +
+        //   user.documento,
+        //   {
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   }
+        // );
+
+        // const result = await response.json();
+        // const result1 = await response1.json();
+        // const result2 = await response2.json();
+
+        setPolicy(policyData);
+        setVehicles(vehiclesData);
+        setAccidentReport(reportData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -75,8 +115,10 @@ export default function Profile() {
     };
 
     fetchData();
-  }, [user]);
+  }, [user?.documento]);
 
+
+  console.log("Polizas", policy);
   return (
     <ProtectedRoute>
       <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">
