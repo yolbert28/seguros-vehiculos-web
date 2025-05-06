@@ -50,7 +50,7 @@ const BasicMap = ({getPosition = () => {} }) => {
           setPosition([pos.coords.latitude, pos.coords.longitude]);
         },
         (err) => {
-          setError(err.message);
+          setPosition([10.047627513644713,-69.35754776000978])
         },
         {
           enableHighAccuracy: true,
