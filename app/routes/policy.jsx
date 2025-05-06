@@ -5,7 +5,7 @@ import { redirect, useNavigate } from "react-router";
 import { useParams } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import { useInfoStore } from "../store";
-import Loading from "../Loading";
+import Loading from "../components/Loading";
 
 export function meta({}) {
   return [

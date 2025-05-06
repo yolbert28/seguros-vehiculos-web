@@ -12,6 +12,7 @@ import LeftArrow from "./icons/LeftArrow";
 import "./app.css";
 import { useState } from "react";
 import { useInfoStore } from "./store";
+import 'leaflet/dist/leaflet.css';
 
 export const links = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

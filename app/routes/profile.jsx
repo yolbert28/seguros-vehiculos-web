@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { useInfoStore } from "../store.js";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import { shallow } from "zustand/shallow";
-import Loading from "../Loading.jsx";
+import Loading from "../components/Loading";
 
 export function meta({ }) {
   return [
@@ -119,7 +119,6 @@ export default function Profile() {
   }, [user?.documento]);
 
 
-  console.log("Polizas", policy);
   return (
     <ProtectedRoute>
       <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">

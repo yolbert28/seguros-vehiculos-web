@@ -3,6 +3,7 @@ import "../tabla.css";
 import { useNavigate, useParams } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import { useInfoStore } from "../store";
+import BasicMap from "../components/BasicMap";
 
 export function meta({}) {
   return [
@@ -13,16 +14,15 @@ export function meta({}) {
 
 export default function Report() {
   const description = useRef(null);
-  const address = useRef(null);
+  const [address, setAddress] = useState(null);
   const navigate = useNavigate();
 
   const user = useInfoStore((state) => state.user);
 
   const handlerClick = async () => {
     const descriptionValue = description.current?.value;
-    const addressValue = address.current?.value;
+    const addressValue = address.toString();
     const date = new Date().toISOString().slice(0, 10);
-    console.log("Response status:");
 
     const response = await fetch(
       "https://seguros-vehiculos-backend-production.up.railway.app/accidentReport",
@@ -51,23 +51,24 @@ export default function Report() {
         <h1 className="text-5xl font-bold pt-16 text-center w-[90%]">
           Reportar un sinistro
         </h1>
-        <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
+        <div className="pt-16 grid grid-cols-1 w-[80%] gap-8">
           <div>
             <span className="font-bold">Descripción: </span>
             <br />
             <textarea
               id="description"
-              className=" bg-[#FAFDFF] border-amber-500 border-1 rounded-md w-full h-48 resize-none"
+              className=" bg-[#FAFDFF] border-amber-500 border-1 rounded-md w-full h-32 resize-none"
               ref={description}
             />
           </div>
           <div>
             <span className="font-bold">Dirección: </span> <br />
-            <textarea
+            {/* <textarea
               id="address"
               className=" bg-[#FAFDFF] border-amber-500 border-1 rounded-md w-full h-24 resize-none"
               ref={address}
-            />
+            /> */}
+            <BasicMap getPosition={setAddress}/>
           </div>
         </div>
         <div

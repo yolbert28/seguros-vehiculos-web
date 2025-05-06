@@ -13,18 +13,17 @@ export const useInfoStore = create(persist((set) => ({
     const { expirationTimer } = useInfoStore.getState();
     if (expirationTimer) clearTimeout(expirationTimer);
 
-    window.removeEventListener('beforeunload', useInfoStore.getState().handleWindowClose);
-    window.removeEventListener('pagehide', useInfoStore.getState().handleWindowClose);
+    // Remover listeners previos (por si acaso)
+    window.removeEventListener('unload', useInfoStore.getState().handleWindowClose);
 
     // Establecer el nuevo token y hora de login
     const loginTime = new Date().getTime();
     useInfoStore.getState().initializeTimer();
-    
-    // Configurar el event listener para cerrar sesión al salir
-    window.addEventListener('beforeunload', useInfoStore.getState().handleWindowClose);
-    window.addEventListener('pagehide', useInfoStore.getState().handleWindowClose);
 
-    set({ user, token, loginTime});
+    // Configurar el event listener para cerrar sesión solo al cerrar la ventana
+    window.addEventListener('unload', useInfoStore.getState().handleWindowClose);
+
+    set({ user, token, loginTime });
   },
 
   // Acción para cerrar sesión
@@ -33,16 +32,19 @@ export const useInfoStore = create(persist((set) => ({
     if (expirationTimer) clearTimeout(expirationTimer);
 
     // Remover event listeners al hacer logout
-    window.removeEventListener('beforeunload', useInfoStore.getState().handleWindowClose);
-    window.removeEventListener('pagehide', useInfoStore.getState().handleWindowClose);
-    
+    window.removeEventListener('unload', useInfoStore.getState().handleWindowClose);
+
     set(() => ({ user: {}, token: null, loginTime: null, expirationTimer: null }));
-    
+
   },
 
   // Manejador para cuando se cierra la ventana/pestaña
   handleWindowClose: () => {
-    useInfoStore.getState().logout();
+    // Solo ejecutamos logout si realmente se está cerrando la ventana
+    // (no en recargas)
+    if (!window.performance.navigation || window.performance.navigation.type !== 1) {
+      useInfoStore.getState().logout();
+    }
   },
 
   // Nueva acción para inicializar el temporizador al cargar la página
@@ -70,7 +72,7 @@ export const useInfoStore = create(persist((set) => ({
       console.log('Sesión expirada automáticamente después de 2 minutos');
     }, remainingTime);
 
-    set({ expirationTimer: timer});
+    set({ expirationTimer: timer });
   }
 })))
 

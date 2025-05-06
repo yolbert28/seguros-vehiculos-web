@@ -3,7 +3,8 @@ import "../tabla.css";
 import { useNavigate, useParams } from "react-router";
 import { useInfoStore } from "../store";
 import ProtectedRoute from "./ProtectedRoute";
-import Loading from "../Loading";
+import Loading from "../components/Loading";
+import Map from "../components/Map";
 
 export function meta({}) {
   return [
@@ -77,13 +78,14 @@ export default function AccidentReport() {
                   </div>
                   <div className="w-[95%] wrap-break-word">
                     <span className="font-bold">Estado: </span>
-                    {report.atendido ? "Pendiente" : "Finalizado"}
+                    {report.atendido ? "Finalizado" : "Pendiente"}
                   </div>
                 </div>
+                <Map position={report.direccion.split(",")}/>
                 <button
                   className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
                   onClick={() => {
-                    navigate(-1);
+                    navigate("/profile");
                   }}
                 >
                   Volver
