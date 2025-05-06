@@ -38,13 +38,14 @@ export function Layout({ children }) {
   };
 
   const handlerClick = () => {
-    if(!token)
-      navigate("/Login");
+    if (!token) navigate("/Login");
     else {
-      if (confirm("Seguro que desea cerrar la sesión"))
-          logout();
+      if (confirm("Seguro que desea cerrar la sesión")){ 
+        logout();
+        navigate("/");
+      }
     }
-  }
+  };
 
   return (
     <html lang="en">
@@ -64,23 +65,30 @@ export function Layout({ children }) {
               <LeftArrow />
             </li>
             <li className="py-4 hover:bg-[#0057B4]">
-              <a href="/" className="py-4 pl-[4vw] pr-[80vw] w-full">
+              <a href="/" className="py-4 pl-[6vw] pr-[80vw] w-full">
                 Inicio
               </a>
             </li>
-            <li className="py-4 hover:bg-[#0057B4]">
-              <a href="/profile" className="py-4 pl-[4vw] pr-[80vw] w-full">
+            <li className="pt-4 hover:bg-[#0057B4]">
+              <a href="/profile" className="py-4 pl-[6vw] pr-72 w-full">
                 Mi perfil
               </a>
             </li>
             <li className="py-4 hover:bg-[#0057B4]">
-              <button onClick={handlerClick} href="/" className="py-4 pl-[4vw] pr-[80vw] w-full ">
-                Login
+              <button
+                onClick={handlerClick}
+                href="/"
+                className="py-4 pl-[4vw] pr-[80vw] w-full "
+              >
+                {token ? "Logout" : "Login"}
               </button>
             </li>
           </ul>
         </nav>
-        <div className="h-20 w-full relative bg-[#003366] flex flex-col items-center text-[#FAFDFF] font-bold" style={{ display: isVisible ? "none" : "flex" }}>
+        <div
+          className="h-20 w-full relative bg-[#003366] flex flex-col items-center text-[#FAFDFF] font-bold"
+          style={{ display: isVisible ? "none" : "flex" }}
+        >
           <div className="h-20 w-full max-w-[1000px] relative bg-[#003366] flex flex-row items-center overflow-hidden">
             <a href="/" className="mr-auto">
               <img
@@ -94,13 +102,22 @@ export function Layout({ children }) {
                 className="h-20 relative left-4 sm:inline hidden"
               />
             </a>
-            <a href="/" className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
+            <a
+              href="/"
+              className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]"
+            >
               Inicio
             </a>
-            <a href="/profile" className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
+            <a
+              href="/profile"
+              className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]"
+            >
               Mi perfil
             </a>
-            <button onClick={handlerClick} className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]">
+            <button
+              onClick={handlerClick}
+              className="hidden sm:inline px-6 py-8 hover:bg-[#0057B4]"
+            >
               {token ? "Logout" : "Login"}
             </button>
             <svg

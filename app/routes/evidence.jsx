@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../tabla.css";
 import { useNavigate, useParams } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
+import Loading from "../Loading";
 
 export function meta({}) {
   return [
@@ -88,7 +89,7 @@ export default function Evidence() {
             )}
           </>
         ) : (
-          <div> Cargando</div>
+          <Loading/>
         )}
       </main>
     </ProtectedRoute>

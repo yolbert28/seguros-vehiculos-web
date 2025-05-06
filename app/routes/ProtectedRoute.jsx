@@ -5,16 +5,17 @@ import { useLocation, useNavigate } from 'react-router';
 const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
   const { token } = useInfoStore();
-  const location = useLocation();
+  const initializeTimer = useInfoStore((state) => state.initializeTimer)
 
   useEffect(() => {
-    console.log("Token", token);
     if (!token) {
       navigate('/login');
-    } else {
-      navigate(location.pathname);
     }
   }, [token, navigate]);
+
+  useEffect(() => {
+    initializeTimer();
+  },[initializeTimer]);
 
   return token ? children : null;
 };

@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import "../tabla.css";
 import { useNavigate } from "react-router";
 import { useInfoStore } from "../store";
+import ProtectedLoginRoute from "./ProtectedLoginRoute";
 
 export function meta({}) {
   return [
@@ -41,51 +42,59 @@ export default function Login() {
     );
 
     console.log(response.status);
-    if(response.status == 401)
-      setStatus(401)
+    if (response.status == 401) setStatus(401);
     else if (!response.ok) {
       console.log("Error");
     } else {
       const result = await response.json();
       console.log(result);
 
-      login(result.token,result.user);
+      login(result.token, result.user);
 
       navigate("/profile");
     }
   };
 
   return (
-    <main className="text-[#81b9f9] bg-[#003366] flex flex-col items-center w-full h-full">
-      <h1 className="text-5xl font-bold pt-24 text-center w-[90%]">
-        Iniciar Sesion
-      </h1>
-      <div className="pt-16 flex flex-col items-center w-[80%] gap-8 relative">
-        <div className="flex flex-col items-center max-w-96 w-full">
-          <span className="font-bold w-full">Documento: </span>
-          <br />
-          <input
-            id="document"
-            className=" bg-[#FAFDFF] text-[#002651] border-amber-500 border-1 rounded-md max-w-96 w-full h-12 resize-none"
-            ref={document}
-          />
+    <ProtectedLoginRoute>
+      <main className="text-[#81b9f9] bg-[#003366] flex flex-col items-center w-full h-full">
+        <h1 className="text-5xl font-bold pt-24 text-center w-[90%]">
+          Iniciar Sesion
+        </h1>
+        <div className="pt-16 flex flex-col items-center w-[80%] gap-8 relative">
+          <div className="flex flex-col items-center max-w-96 w-full">
+            <span className="font-bold w-full">Documento: </span>
+            <br />
+            <input
+              id="document"
+              className=" bg-[#FAFDFF] text-[#002651] border-amber-500 border-1 rounded-md max-w-96 w-full h-12 resize-none"
+              ref={document}
+            />
+          </div>
+          <div className="flex flex-col items-center max-w-96 w-full">
+            <span className="font-bold w-full">Contraseña: </span> <br />
+            <input
+              type="password"
+              id="password"
+              className=" bg-[#FAFDFF] text-[#002651] border-amber-500 border-1 rounded-md max-w-96 w-full h-12 resize-none"
+              ref={password}
+            />
+          </div>
+          {status == 200 ? (
+            <></>
+          ) : (
+            <p className="text-[#ff3939] text-lg absolute bottom-38">
+              Credenciales incorrectas
+            </p>
+          )}
+          <div
+            className="bg-[#0057B4] max-w-96 w-full text-center py-6 mt-16 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+            onClick={handlerClick}
+          >
+            Ingresar
+          </div>
         </div>
-        <div className="flex flex-col items-center max-w-96 w-full">
-          <span className="font-bold w-full">Contraseña: </span> <br />
-          <input
-            id="password"
-            className=" bg-[#FAFDFF] text-[#002651] border-amber-500 border-1 rounded-md max-w-96 w-full h-12 resize-none"
-            ref={password}
-          />
-        </div>
-        {(status == 200) ? (<></>):(<p className="text-[#ff3939] text-lg absolute bottom-38">Credenciales incorrectas</p>)}
-        <div
-          className="bg-[#0057B4] max-w-96 w-full text-center py-6 mt-16 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
-          onClick={handlerClick}
-        >
-          Ingresar
-        </div>
-      </div>
-    </main>
+      </main>
+    </ProtectedLoginRoute>
   );
 }

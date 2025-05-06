@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router";
 import { useInfoStore } from "../store.js";
 import ProtectedRoute from "./ProtectedRoute.jsx";
 import { shallow } from "zustand/shallow";
+import Loading from "../Loading.jsx";
 
 export function meta({ }) {
   return [
@@ -252,7 +253,7 @@ export default function Profile() {
             </div>
           </>
         ) : (
-          <div>Cargando</div>
+          <Loading/>
         )}
       </main>
     </ProtectedRoute>

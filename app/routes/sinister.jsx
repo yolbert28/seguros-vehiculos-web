@@ -4,6 +4,7 @@ import styles from "../policy.module.css";
 import { Link, useNavigate, useParams } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import { useInfoStore } from "../store";
+import Loading from "../Loading";
 
 export function meta({}) {
   return [
@@ -212,7 +213,7 @@ export default function Sinister() {
             )}
           </>
         ) : (
-          <div> cargando</div>
+          <Loading/>
         )}
         {/* <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">
         Inspecciones de la indemnizacion

@@ -3,6 +3,7 @@ import "../tabla.css";
 import { useNavigate, useParams } from "react-router";
 import { useInfoStore } from "../store";
 import ProtectedRoute from "./ProtectedRoute";
+import Loading from "../Loading";
 
 export function meta({}) {
   return [
@@ -95,7 +96,7 @@ export default function AccidentReport() {
             )}
           </>
         ) : (
-          <div> cargando</div>
+          <Loading/>
         )}
       </main>
     </ProtectedRoute>

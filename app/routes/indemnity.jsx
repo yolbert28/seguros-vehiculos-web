@@ -4,6 +4,7 @@ import styles from "../policy.module.css";
 import { useNavigate, useParams } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import { useInfoStore } from "../store";
+import Loading from "../Loading";
 
 export function meta({}) {
   return [
@@ -140,7 +141,7 @@ export default function Indemnity() {
             )}
           </>
         ) : (
-          <div> cargando</div>
+          <Loading/>
         )}
       </main>
     </ProtectedRoute>
