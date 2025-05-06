@@ -64,7 +64,7 @@ export default function Sinister() {
                 <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
                   <div className="w-[95%] wrap-break-word">
                     <span className="font-bold">Identificador: </span>{" "}
-                    {String(sinister.id).padStart(6,"0")}
+                    {String(sinister.id).padStart(6, "0")}
                   </div>
                   <div className="w-[95%] wrap-break-word">
                     <span className="font-bold">Descripción: </span>{" "}
@@ -188,7 +188,7 @@ export default function Sinister() {
                 <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
                   <div>
                     <span className="font-bold">Identificador:</span>{" "}
-                    {String(sinister.indemnizacion.id).padStart(6,"0")}
+                    {String(sinister.indemnizacion.id).padStart(6, "0")}
                   </div>
                   <div>
                     <span className="font-bold">Descripción: </span>
@@ -200,11 +200,19 @@ export default function Sinister() {
                   </div>
                 </div>
                 <Link
-                  className="bg-[#003366] py-6 px-16 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+                  className="bg-[#003366] py-6 px-16 mt-12 mb-10 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
                   to={`/indemnity/${sinister.indemnizacion.id}`}
                 >
                   Más información
                 </Link>
+                <button
+                  className="bg-[#003366] py-6 px-30 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Volver
+                </button>
               </>
             ) : (
               <h1 className="text-5xl font-bold pt-16 text-center">
@@ -213,7 +221,7 @@ export default function Sinister() {
             )}
           </>
         ) : (
-          <Loading/>
+          <Loading />
         )}
         {/* <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">
         Inspecciones de la indemnizacion

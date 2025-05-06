@@ -68,7 +68,7 @@ export default function Report() {
               className=" bg-[#FAFDFF] border-amber-500 border-1 rounded-md w-full h-24 resize-none"
               ref={address}
             /> */}
-            <BasicMap getPosition={setAddress}/>
+            <BasicMap getPosition={setAddress} />
           </div>
         </div>
         <div
@@ -77,6 +77,14 @@ export default function Report() {
         >
           Reportar siniestro
         </div>
+        <button
+          className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Volver
+        </button>
       </main>
     </ProtectedRoute>
   );

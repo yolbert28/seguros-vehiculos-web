@@ -143,6 +143,14 @@ export default function Policy() {
                     </div>
                   ))}
                 </div>
+                <button
+                  className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                >
+                  Volver
+                </button>
                 {/* <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">Informacion de coberturas</h2>
       <div className={styles.vehiclesList}>
         {policy.coberturas.map((cobertura) => (
