@@ -15,11 +15,32 @@ export function meta({}) {
 export default function Report() {
   const description = useRef(null);
   const [address, setAddress] = useState(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const user = useInfoStore((state) => state.user);
 
+  const validateForm = () => {
+    const descriptionValue = description.current?.value.trim();
+    
+    if (!descriptionValue) {
+      setError("La descripción no puede estar vacía");
+      return false;
+    }
+    
+    if (descriptionValue.length < 10) {
+      setError("La descripción debe tener al menos 10 caracteres");
+      return false;
+    }
+    
+    setError("");
+    return true;
+  };
+
   const handlerClick = async () => {
+    if(!validateForm()){
+      return;
+    }
     const descriptionValue = description.current?.value;
     const addressValue = address.toString();
     const date = new Date().toISOString().slice(0, 10);
@@ -45,6 +66,13 @@ export default function Report() {
     navigate(`/accidentReport/${result.id}`);
   };
 
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handlerClick();
+    }
+  };
+
   return (
     <ProtectedRoute>
       <main className="text-[#002651] flex flex-col items-center max-w-[1000px] w-full">
@@ -59,7 +87,11 @@ export default function Report() {
               id="description"
               className=" bg-[#FAFDFF] border-amber-500 border-1 rounded-md w-full h-32 resize-none"
               ref={description}
+              onChange={validateForm} // Validar mientras escribe
+              onBlur={validateForm} // Validar al salir del campo
+              onKeyDown={handleKeyDown}  // <- Aquí añadimos el manejador
             />
+            <p className="text-sm text-red-500 ">{error}</p>
           </div>
           <div>
             <span className="font-bold">Dirección: </span> <br />

@@ -14,12 +14,55 @@ export function meta({}) {
 export default function Login() {
   const document = useRef(null);
   const password = useRef(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [status, setStatus] = useState(200);
 
   const login = useInfoStore((status) => status.login);
 
+  const validateForm = () => {
+    const documentValue = document.current?.value.trim();
+    const passwordValue = password.current?.value.trim();
+
+    if (!documentValue) {
+      setError("El documento no puede estar vacío");
+      return false;
+    }
+    
+    if (!/^\d+$/.test(documentValue)) {
+      setError("El documento solo puede contener números");
+      return false;
+    }
+
+    if (documentValue.length < 7 || documentValue.length > 8) {
+      setError("El documento debe tener entre 7 y 8 caracteres");
+      return false;
+    }
+
+    if (!passwordValue) {
+      setError("La contraseña no puede estar vacía");
+      return false;
+    }
+
+    if (passwordValue.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres");
+      return false;
+    }
+
+    if (passwordValue.length > 20) {
+      setError("La contraseña no debe tener más de 20 caracteres");
+      return false;
+    }
+
+    setError("");
+    return true;
+  };
+
   const handlerClick = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     const documentValue = document.current?.value;
     const passwordValue = password.current?.value;
     console.log("Response status:");
@@ -41,8 +84,8 @@ export default function Login() {
       }
     );
 
-    console.log(response.status);
-    if (response.status == 401) setStatus(401);
+    if (response.status == 401) 
+      setError("Credenciales incorrectas");
     else if (!response.ok) {
       console.log("Error");
     } else {
@@ -52,6 +95,12 @@ export default function Login() {
       login(result.token, result.user);
 
       navigate("/profile");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handlerClick();
     }
   };
 
@@ -69,6 +118,9 @@ export default function Login() {
               id="document"
               className=" bg-[#FAFDFF] text-[#002651] border-amber-500 border-1 rounded-md max-w-96 w-full h-12 resize-none"
               ref={document}
+              onChange={validateForm} // Validar mientras escribe
+              onBlur={validateForm} // Validar al salir del campo
+              onKeyDown={handleKeyDown}  // <- Aquí añadimos el manejador
             />
           </div>
           <div className="flex flex-col items-center max-w-96 w-full">
@@ -78,17 +130,18 @@ export default function Login() {
               id="password"
               className=" bg-[#FAFDFF] text-[#002651] border-amber-500 border-1 rounded-md max-w-96 w-full h-12 resize-none"
               ref={password}
+              onChange={validateForm} // Validar mientras escribe
+              onBlur={validateForm} // Validar al salir del campo
+              onKeyDown={handleKeyDown}  // <- Aquí añadimos el manejador
             />
           </div>
-          {status == 200 ? (
+          {!error ? (
             <></>
           ) : (
-            <p className="text-[#ff3939] text-lg absolute bottom-38">
-              Credenciales incorrectas
-            </p>
+            <p className="text-[#ff3939] text-lg absolute bottom-44">{error}</p>
           )}
           <div
-            className="bg-[#0057B4] max-w-96 w-full text-center py-6 mt-16 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
+            className="bg-[#0057B4] max-w-96 w-full text-center py-6 mt-16 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#5377c7]"
             onClick={handlerClick}
           >
             Ingresar
