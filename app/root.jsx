@@ -46,6 +46,7 @@ export function Layout({ children }) {
         navigate("/");
       }
     }
+    setIsVisible(!isVisible);
   };
 
   return (

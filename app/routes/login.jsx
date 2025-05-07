@@ -65,7 +65,6 @@ export default function Login() {
 
     const documentValue = document.current?.value;
     const passwordValue = password.current?.value;
-    console.log("Response status:");
 
     console.log("documento", documentValue);
 
@@ -84,7 +83,8 @@ export default function Login() {
       }
     );
 
-    if (response.status == 401) 
+    console.log("Response status:",response);
+    if (response.status == 400) 
       setError("Credenciales incorrectas");
     else if (!response.ok) {
       console.log("Error");
@@ -138,7 +138,7 @@ export default function Login() {
           {!error ? (
             <></>
           ) : (
-            <p className="text-[#ff3939] text-lg absolute bottom-44">{error}</p>
+            <p className="text-[#ff3939] text-lg absolute bottom-38 sm:bottom-44">{error}</p>
           )}
           <div
             className="bg-[#0057B4] max-w-96 w-full text-center py-6 mt-16 mb-12 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#5377c7]"
