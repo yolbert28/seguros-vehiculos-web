@@ -41,7 +41,7 @@ export default function Policy() {
         }
         const result = await response.json();
         console.log(result);
-        setPolicy(result);
+        setPolicy(result.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
