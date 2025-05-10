@@ -22,7 +22,7 @@ export default function Policy() {
 
   const [loading, setLoading] = useState(true);
 
-  const user = useInfoStore((state) => state.user)
+  const user = useInfoStore((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,7 +65,7 @@ export default function Policy() {
                 <div className="pt-16 grid grid-cols-1 sm:grid-cols-2 w-[80%] gap-8">
                   <div className="w-[95%] wrap-break-word">
                     <span className="font-bold">Identificador:</span>{" "}
-                    {String(policy.id).padStart(6,"0")}
+                    {String(policy.id).padStart(6, "0")}
                   </div>
                   <div className="w-[95%] wrap-break-word">
                     <span className="font-bold">Asesor:</span>{" "}
@@ -143,6 +143,24 @@ export default function Policy() {
                     </div>
                   ))}
                 </div>
+                <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">
+                  Informacion de coberturas
+                </h2>
+                <div className={styles.vehiclesList}>
+                  {policy.coberturas.map((cobertura) => (
+                    <div key={cobertura.id} className={`${styles.vehicleItem}`}>
+                      <div className={styles.vehicleInfo}>
+                        <span className={styles.vehiclePlate}>
+                          {String(cobertura.id).padStart(6, "0")}
+                        </span>
+                        <span>Nombre: {cobertura.nombre}</span>
+                        <span className=" w-[95%] wrap-break-word">
+                          Descripción: {cobertura.descripcion}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
                 <button
                   className="bg-[#003366] py-6 px-28 mt-12 mb-16 text-2xl font-bold text-[#FAFDFF] rounded-2xl active:bg-[#0057B4]"
                   onClick={() => {
@@ -151,22 +169,6 @@ export default function Policy() {
                 >
                   Volver
                 </button>
-                {/* <h2 className="text-3xl font-bold pt-16 text-center w-[90%]">Informacion de coberturas</h2>
-      <div className={styles.vehiclesList}>
-        {policy.coberturas.map((cobertura) => (
-          <div key={cobertura.id} className={`${styles.vehicleItem}`}>
-            <div className={styles.vehicleInfo}>
-              <span className={styles.vehiclePlate}>
-                {String(cobertura.id).padStart(6, "0")}
-              </span>
-              <span>Nombre: {cobertura.nombre}</span>
-              <span className=" w-[95%] wrap-break-word">
-                Descripción: {cobertura.descripcion}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div> */}
               </>
             ) : (
               <h1 className="text-5xl font-bold pt-16 text-center">
@@ -175,7 +177,7 @@ export default function Policy() {
             )}
           </>
         ) : (
-          <Loading/>
+          <Loading />
         )}
       </main>
     </ProtectedRoute>

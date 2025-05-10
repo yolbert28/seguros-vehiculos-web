@@ -38,7 +38,7 @@ export default function Vehicle() {
         }
         const result = await response.json();
         console.log(result);
-        setVehicle(result);
+        setVehicle(result.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
