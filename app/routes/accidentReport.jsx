@@ -78,7 +78,7 @@ export default function AccidentReport() {
                   </div>
                   <div className="w-[95%] wrap-break-word">
                     <span className="font-bold">Estado: </span>
-                    {report.atendido ? "Finalizado" : "Pendiente"}
+                    {report.nombre_atendido}
                   </div>
                 </div>
                 <Map position={report.direccion.split(",")}/>
