@@ -161,6 +161,8 @@ export default function Report() {
               id="description"
               className=" bg-[#FAFDFF] border-amber-500 border-1 rounded-md w-full h-32 resize-none"
               ref={description}
+              minLength={5}
+              maxLength={450}
               onChange={validateForm} // Validar mientras escribe
               onBlur={validateForm} // Validar al salir del campo
               onKeyDown={handleKeyDown} // <- Aquí añadimos el manejador
